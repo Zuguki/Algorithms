@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Algorithms
+namespace Algorithms.Tests
 {
     [TestFixture]
     public class MyQueueTests
@@ -27,7 +27,7 @@ namespace Algorithms
             var queue = new MyQueue<int>();
             queue.Enqueue(1);
             queue.Enqueue(2);
-            Assert.AreEqual(queue.Count, 2);
+            Assert.AreEqual(2, queue.Count);
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Algorithms
             queue.Enqueue(1);
             queue.Enqueue(2);
             queue.Dequeue();
-            Assert.AreEqual(queue.Count, 1);
+            Assert.AreEqual(1, queue.Count);
         }
 
         [Test]
@@ -54,7 +54,40 @@ namespace Algorithms
             queue.Enqueue(7);
             queue.Enqueue(8);
             queue.Enqueue(9);
-            Assert.AreEqual(queue.Count, 10);
+            Assert.AreEqual(10, queue.Count);
+        }
+        
+        [Test]
+        public void Dequeue_EmptyQueue_ReturnsIOE()
+        {
+            var queue = new MyQueue<int>();
+            Assert.Throws<InvalidOperationException>(() => queue.Dequeue());
+        }
+
+        [Test]
+        public void Peek_EmptyQueue_ReturnsIOE()
+        {
+            var queue = new MyQueue<int>();
+            Assert.Throws<InvalidOperationException>(() => queue.Peek());
+        }
+
+        [Test]
+        public void Peek_EnqueueTwoItems_ReturnsFirstItem()
+        {
+            var queue = new MyQueue<int>();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            Assert.AreEqual(1, queue.Peek());
+        }
+        
+        [Test]
+        public void Peek_EnqueueTwoItemsAndDequeueFirst_ReturnsSecondItem()
+        {
+            var queue = new MyQueue<int>();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Dequeue();
+            Assert.AreEqual(2, queue.Peek());
         }
     }
 }

@@ -44,6 +44,13 @@ namespace Algorithms
             if (IsEmpty) _head = _tail = 0;
         }
 
+        public T Peek()
+        {
+            if (IsEmpty)
+                throw new InvalidOperationException();
+            return _queue[_head];
+        }
+
         public int Count => _tail - _head;
         public bool IsEmpty => Count == 0;
         

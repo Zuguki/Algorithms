@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Algorithms
+namespace Algorithms.Tests
 {
     [TestFixture]
     public class MyStackTests
