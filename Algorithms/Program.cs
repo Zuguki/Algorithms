@@ -7,13 +7,27 @@ namespace Algorithms
     {
         public static void Main(string[] args)
         {
-            const int arrayLength = 50000000;
-            var rnd = new Random();
-            var arr = new int[arrayLength];
-            
-            for (var i = 0; i < arrayLength; i++) arr[i] = rnd.Next(0, 1000);
+            //const int arrayLength = 50000000;
+            //var rnd = new Random();
+            //var arr = new int[arrayLength];
+            //
+            //for (var i = 0; i < arrayLength; i++) arr[i] = rnd.Next(0, 1000);
+//
+            //MeasureTime(arr);
 
-            MeasureTime(arr);
+            var queue = new MyQueue<int>();
+            queue.Enqueue(1);
+            queue.Enqueue(2);
+            queue.Enqueue(3);
+            queue.Enqueue(4);
+            queue.Enqueue(5);
+            queue.Dequeue();
+            queue.Enqueue(6);
+
+            foreach (var item in queue)
+            {
+                Console.WriteLine(item);
+            }
         }
 
         private static void MeasureTime(int[] arr)

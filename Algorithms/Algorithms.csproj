@@ -50,6 +50,8 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="MyQueue.cs" />
+        <Compile Include="MyQueue.Tests.cs" />
         <Compile Include="MyStack.cs" />
         <Compile Include="MyStack.Tests.cs" />
         <Compile Include="Program.cs" />
