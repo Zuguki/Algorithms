@@ -55,6 +55,7 @@
         <Compile Include="MyStack.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="SequentialSearchSt.cs" />
         <Compile Include="Sort.cs" />
         <Compile Include="Tests\CircularQueue.Tests.cs" />
         <Compile Include="Tests\MyQueue.Tests.cs" />
