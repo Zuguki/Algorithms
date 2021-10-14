@@ -50,6 +50,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="ChainHashSet.cs" />
         <Compile Include="CircularQueue.cs" />
         <Compile Include="MyQueue.cs" />
         <Compile Include="MyStack.cs" />
