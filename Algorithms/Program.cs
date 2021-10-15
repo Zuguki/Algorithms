@@ -7,26 +7,13 @@ namespace Algorithms
     {
         public static void Main(string[] args)
         {
-            //const int arrayLength = 50000000;
-            //var rnd = new Random();
-            //var arr = new int[arrayLength];
-            //
-            //for (var i = 0; i < arrayLength; i++) arr[i] = rnd.Next(0, 1000);
-//
-            //MeasureTime(arr);
+            const int arrayLength = 50000000;
+            var rnd = new Random();
+            var arr = new int[arrayLength];
+            
+            for (var i = 0; i < arrayLength; i++) arr[i] = rnd.Next(0, 1000);
 
-            var heap = new MaxHeap<int>();
-            heap.Insert(1);
-            heap.Insert(2);
-            heap.Insert(65);
-            heap.Insert(4);
-            heap.Insert(5);
-
-            Console.Write("> ");
-            foreach (var value in heap.Values())
-            {
-                Console.Write($"{value} ");
-            }
+            MeasureTime(arr);
         }
 
         private static void MeasureTime(int[] arr)

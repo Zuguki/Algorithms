@@ -13,6 +13,12 @@ namespace Algorithms
         private T[] _heap;
         private const int DefaultCapacity = 4;
 
+        private enum Position
+        {
+            Right,
+            Left
+        }
+
         public MaxHeap() : this(DefaultCapacity)
         { }
 
@@ -30,11 +36,41 @@ namespace Algorithms
             Swim(Count++);
         }
 
-        private void Resize(int newHeapLength)
+        public T Peek()
         {
-            var tmpHeap = new T[newHeapLength];
-            Array.Copy(_heap, 0, tmpHeap, 0, _heap.Length);
-            _heap = tmpHeap;
+            if (_heap == null)
+                throw new InvalidOperationException();
+
+            return _heap[0];
+        }
+
+        public T Remove()
+        {
+            return Remove(0);
+        }
+
+        public T Remove(int index)
+        {
+            if (_heap == null)
+                throw new InvalidOperationException();
+
+            var removedValue = _heap[index];
+            _heap[index] = _heap[Count - 1];
+            if (index == 0 || _heap[index].CompareTo(GetParent(index)) < 0)
+                Sink(index);
+            else
+                Swim(index);
+
+            Count--;
+            return removedValue;
+        }
+
+        public IEnumerable<T> Values()
+        {
+            for (var ind = 0; ind < Count; ind++)
+            {
+                yield return _heap[ind];
+            }
         }
 
         private void Swim(int itemIndex)
@@ -50,15 +86,66 @@ namespace Algorithms
 
             bool IsParentLess(int index) => newValue.CompareTo(GetParent(index)) > 0;
         }
-
-        public IEnumerable<T> Values()
+        
+        private void Sink(int itemIndex)
         {
-            for (var ind = 0; ind < Count; ind++)
+            var lastHeapIndex = Count - 1;
+            while (itemIndex <= lastHeapIndex)
             {
-                yield return _heap[ind];
+                var leftChildIndex = GetChildIndex(Position.Left, itemIndex);
+                var rightChildIndex = GetChildIndex(Position.Right, itemIndex);
+                
+                if (leftChildIndex < lastHeapIndex)
+                    break;
+
+                var childIndexToSwap = GetChildIndexToSwap(leftChildIndex, rightChildIndex);
+
+                if (SinkingIsLessThan(childIndexToSwap))
+                    Exchange(itemIndex, childIndexToSwap);
+                else
+                    break;
+
+                itemIndex = childIndexToSwap;
+            }
+
+            bool SinkingIsLessThan(int childToSwap) => _heap[itemIndex].CompareTo(_heap[childToSwap]) < 0;
+
+            void Exchange(int leftIndex, int rightIndex)
+            {
+                (_heap[rightIndex], _heap[leftIndex]) = (_heap[leftIndex], _heap[rightIndex]);
+            }
+            
+            int GetChildIndexToSwap(int leftChildIndex, int rightChildIndex)
+            {
+                int childToSwap;
+                
+                if (rightChildIndex > lastHeapIndex)
+                    childToSwap = leftChildIndex;
+                else
+                {
+                    var compare = _heap[leftChildIndex].CompareTo(_heap[rightChildIndex]);
+                    childToSwap = compare > 0 ? leftChildIndex : rightChildIndex;
+                }
+
+                return childToSwap;
             }
         }
 
+        private int GetChildIndex(Position position, int itemIndex)
+        {
+            if (position == Position.Left)
+                return 2 * itemIndex + 1;
+
+            return 2 * itemIndex + 2;
+        }
+
+        private void Resize(int newHeapLength)
+        {
+            var tmpHeap = new T[newHeapLength];
+            Array.Copy(_heap, 0, tmpHeap, 0, _heap.Length);
+            _heap = tmpHeap;
+        }
+        
         private T GetParent(int index) => _heap[GetParentIndex(index)];
 
         private int GetParentIndex(int index) => (index - 1) / 2;
