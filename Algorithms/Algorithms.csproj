@@ -61,6 +61,7 @@
         <Compile Include="Tests\CircularQueue.Tests.cs" />
         <Compile Include="Tests\MyQueue.Tests.cs" />
         <Compile Include="Tests\MyStack.Tests.cs" />
+        <Compile Include="TreeNode.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />
