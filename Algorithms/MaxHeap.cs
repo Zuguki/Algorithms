@@ -57,7 +57,7 @@ namespace Algorithms
             var removedValue = _heap[index];
             _heap[index] = _heap[Count - 1];
             if (index == 0 || _heap[index].CompareTo(GetParent(index)) < 0)
-                Sink(index);
+                Sink(index, Count - 1);
             else
                 Swim(index);
 
@@ -70,6 +70,16 @@ namespace Algorithms
             for (var ind = 0; ind < Count; ind++)
             {
                 yield return _heap[ind];
+            }
+        }
+
+        public void Sort()
+        {
+            var lastHeapIndex = Count - 1;
+            for (var i = 0; i < lastHeapIndex; i++)
+            {
+                Exchange(0, lastHeapIndex - i);
+                Sink(0, lastHeapIndex - i - 1);
             }
         }
 
@@ -87,15 +97,14 @@ namespace Algorithms
             bool IsParentLess(int index) => newValue.CompareTo(GetParent(index)) > 0;
         }
         
-        private void Sink(int itemIndex)
+        private void Sink(int itemIndex, int lastHeapIndex)
         {
-            var lastHeapIndex = Count - 1;
             while (itemIndex <= lastHeapIndex)
             {
                 var leftChildIndex = GetChildIndex(Position.Left, itemIndex);
                 var rightChildIndex = GetChildIndex(Position.Right, itemIndex);
                 
-                if (leftChildIndex < lastHeapIndex)
+                if (leftChildIndex > lastHeapIndex)
                     break;
 
                 var childIndexToSwap = GetChildIndexToSwap(leftChildIndex, rightChildIndex);
@@ -110,11 +119,6 @@ namespace Algorithms
 
             bool SinkingIsLessThan(int childToSwap) => _heap[itemIndex].CompareTo(_heap[childToSwap]) < 0;
 
-            void Exchange(int leftIndex, int rightIndex)
-            {
-                (_heap[rightIndex], _heap[leftIndex]) = (_heap[leftIndex], _heap[rightIndex]);
-            }
-            
             int GetChildIndexToSwap(int leftChildIndex, int rightChildIndex)
             {
                 int childToSwap;
@@ -129,6 +133,11 @@ namespace Algorithms
 
                 return childToSwap;
             }
+        }
+
+        private void Exchange(int leftIndex, int rightIndex)
+        {
+            (_heap[rightIndex], _heap[leftIndex]) = (_heap[leftIndex], _heap[rightIndex]);
         }
 
         private int GetChildIndex(Position position, int itemIndex)
