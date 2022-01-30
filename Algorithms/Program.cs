@@ -6,7 +6,18 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(ThreeSum.Count(new[] {1, 2, -2, -3, 1, -1, 0}));
+            Console.WriteLine(ThreeSum.Count(GetRandomInts(100)));
+        }
+
+        private static int[] GetRandomInts(int count)
+        {
+            var ints = new int[count];
+            var rnd = new Random();
+
+            for (var i = 0; i < count; i++)
+                ints[i] = rnd.Next(-1, 1);
+
+            return ints;
         }
     }
 }
