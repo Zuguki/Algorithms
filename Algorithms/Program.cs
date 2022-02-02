@@ -6,7 +6,10 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(ThreeSum.Count(GetRandomInts(100)));
+            foreach (var item in Sort.Bubble(new [] {1, 5, 2, 1, 3, 8, 4, 2}))
+            {
+                Console.Write($"{item} ");
+            }
         }
 
         private static int[] GetRandomInts(int count)
